@@ -10,6 +10,7 @@ public class CameraScroller : MonoBehaviour
     [SerializeField] float scrollSpeed = .5f;
 
     private Vector3 startPosition;
+    private bool startPosWasOnUI = false;
 
     void Update()
     {
@@ -17,19 +18,33 @@ public class CameraScroller : MonoBehaviour
         ClampCamera();
     }
 
+    /// <summary>
+    /// Controls camera movement.
+    /// </summary>
     private void CameraMovement()
     {
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject(0))
+        // If player has clicked on UI, do not scroll.
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             LogStartPosition();
+            startPosWasOnUI = false;
+        }
+        else if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject())
+        {
+            startPosWasOnUI = true;
+            return;
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()
+            && !startPosWasOnUI)
         {
             MoveCamera();
         }
     }
 
+    /// <summary>
+    /// Logs the start position of where player has clicked.
+    /// </summary>
     private void LogStartPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -39,6 +54,9 @@ public class CameraScroller : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Tracks the player's cursor position and moves the camera accordingly.
+    /// </summary>
     private void MoveCamera()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -50,6 +68,9 @@ public class CameraScroller : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Clamps the camera.
+    /// </summary>
     private void ClampCamera()
     {
         Vector3 clampedPosition = transform.position;

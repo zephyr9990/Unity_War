@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpawnClick : MonoBehaviour
+public class SpawnClick : MonoBehaviour // Should be renamed to Troop Card. Did not have time to manually re-enter values after rename.
 {
     [SerializeField] private GameObject spawnObject;
     [SerializeField] Text resourceNumText;
@@ -26,10 +26,11 @@ public class SpawnClick : MonoBehaviour
 
         if (isTroop)
             gameObject.GetComponent<Button>().onClick.AddListener(SpawnTroop);
-        else
-            gameObject.GetComponent<Button>().onClick.AddListener(ReadyTactic);
     }
 
+    /// <summary>
+    /// Checks to see if the player has enough resources. If they do, troops are spawned.
+    /// </summary>
     private void SpawnTroop()
     {
         if (PlayerHasEnoughResources())
@@ -39,14 +40,13 @@ public class SpawnClick : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks to see if the player has enough resources to spawn troops.
+    /// </summary>
+    /// <returns>Returns true if they do, false if not.</returns>
     private bool PlayerHasEnoughResources()
     {
         int currentResources = resourceController.GetResources();
         return (currentResources - resourceCost) >= 0;
-    }
-
-    private void ReadyTactic()
-    {
-        Debug.Log("TacticClicked");
     }
 }

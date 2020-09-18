@@ -35,6 +35,9 @@ public class TroopBehavior : MonoBehaviour
         GoToTargetDestination();
     }
 
+    /// <summary>
+    /// Goes to the target destination.
+    /// </summary>
     private void GoToTargetDestination()
     {
         targetDestination = GameObject.FindGameObjectWithTag("PlayerDestination").transform;
@@ -47,6 +50,7 @@ public class TroopBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Vehicles do not need speed animation.
         if (!isVehicle)
             animator.SetFloat("speed", navMeshAgent.velocity.magnitude);
     }

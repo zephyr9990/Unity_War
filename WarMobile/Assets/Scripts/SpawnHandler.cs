@@ -12,6 +12,7 @@ public class SpawnHandler : MonoBehaviour
 
     private void Start()
     {
+        // Subscribe to events.
         spawnClicks = FindObjectsOfType<SpawnClick>();
         for (int i = 0; i < spawnClicks.Length; i++)
         {
@@ -19,6 +20,11 @@ public class SpawnHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawns troops.
+    /// </summary>
+    /// <param name="troopToSpawn">The troop to spawn.</param>
+    /// <param name="amount">The amount to spawn.</param>
     private void SpawnTroop(GameObject troopToSpawn, int amount)
     {
         int spawnIndex = Random.Range(0, spawnLocations.Length);
